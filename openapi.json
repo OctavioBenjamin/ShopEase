@@ -1,0 +1,178 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ShopEase API",
+    "description": "API para gestionar usuarios, productos, carritos y órdenes en ShopEase.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Servidor de desarrollo"
+    }
+  ],
+  "paths": {
+    "/usuarios": {
+      "post": {
+        "summary": "Registrar un nuevo usuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "name": { "type": "string" }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Usuario creado con éxito" },
+          "400": { "description": "Error de validación" }
+        }
+      },
+      "get": {
+        "summary": "Obtener todos los usuarios (solo admins)",
+        "responses": {
+          "200": {
+            "description": "Lista de usuarios",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "email": { "type": "string" },
+                      "name": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productos": {
+      "get": {
+        "summary": "Listar todos los productos",
+        "responses": {
+          "200": {
+            "description": "Lista de productos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "name": { "type": "string" },
+                      "price": { "type": "number" },
+                      "stock": { "type": "integer" },
+                      "category_id": { "type": "integer" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo producto (solo admins)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "description": { "type": "string" },
+                  "price": { "type": "number" },
+                  "stock": { "type": "integer" },
+                  "category_id": { "type": "integer" }
+                },
+                "required": ["name", "price", "stock"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Producto creado con éxito" },
+          "400": { "description": "Error de validación" }
+        }
+      }
+    },
+    "/carritos": {
+      "post": {
+        "summary": "Crear un nuevo carrito",
+        "responses": {
+          "201": { "description": "Carrito creado con éxito" }
+        }
+      },
+      "get": {
+        "summary": "Obtener los carritos del usuario autenticado",
+        "responses": {
+          "200": {
+            "description": "Lista de carritos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "created_at": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ordenes": {
+      "post": {
+        "summary": "Crear una nueva orden a partir del carrito",
+        "responses": {
+          "201": { "description": "Orden creada con éxito" }
+        }
+      },
+      "get": {
+        "summary": "Obtener órdenes del usuario autenticado",
+        "responses": {
+          "200": {
+            "description": "Lista de órdenes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "total": { "type": "number" },
+                      "status": { "type": "string" },
+                      "created_at": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
