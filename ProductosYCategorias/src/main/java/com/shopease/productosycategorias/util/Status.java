@@ -1,4 +1,8 @@
 package com.shopease.productosycategorias.util;
 
-public class Status {
+public enum Status {
+    PENDIENTE,
+    PAGADO,
+    ENVIADA,
+    CANCELADO
 }
