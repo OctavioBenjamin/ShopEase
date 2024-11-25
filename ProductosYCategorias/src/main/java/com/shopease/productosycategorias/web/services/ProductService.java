@@ -104,6 +104,13 @@ public class ProductService {
 
     // ? DELETE /productos
 
+    public void deleteProduct(Integer id){
+        ProductEntity product = pRep.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("No se encontro el producto id: " + id));
+
+        pRep.delete(product);
+    }
+
     /*
     public PruebaDTO add(PruebaDTO dto) {
 

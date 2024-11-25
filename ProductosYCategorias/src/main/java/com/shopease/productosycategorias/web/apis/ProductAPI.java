@@ -7,13 +7,11 @@ import com.shopease.productosycategorias.web.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import com.shopease.productosycategorias.exception.ErrorResponse;
+import com.shopease.productosycategorias.exception.ResponseMessage;
 
 @RestController
 @RequestMapping("/productos")
@@ -41,7 +39,7 @@ public class ProductAPI {
             ProductDTO product = serviceProduct.getProduct(id);
             return ResponseEntity.ok(product);
         } catch (ProductNotFoundException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("No existe el producto con id: " + id);
         }
     }
 
@@ -60,11 +58,10 @@ public class ProductAPI {
     @PostMapping("/")
     public ResponseEntity<?> addProduct(@Valid @RequestBody ProductDTO dto){
         try {
-
             ProductDTO productDTO = serviceProduct.add(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(productDTO);
         } catch (CategoryNotFoundException e){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseMessage("No existe la categoria con id: " + dto.getCategory()));
         }
     }
 
@@ -75,31 +72,26 @@ public class ProductAPI {
             ProductDTO updatedProduct = productService.updateProduct(id, dto);
             return ResponseEntity.ok(updatedProduct);
         } catch (ProductNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e.getMessage()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(e.getMessage()));
 
         } catch (CategoryNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(e.getMessage()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(e.getMessage()));
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("Error en la actualización del producto"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Error en la actualización del producto"));
         }
     }
 
 
     // ? DELETE /productos
-
-    /*
-     @PostMapping("/new")
-    public ResponseEntity<?> addPrueba(@RequestBody PruebaDTO pruebaDTO){
-        System.out.println("PruebaDTO recibido: " + pruebaDTO);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Integer id){
         try {
-            PruebaDTO savedPrueba = service.add(pruebaDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedPrueba);
-        }
-        catch (VehiculoInTestException | ConductorNoAptoException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            serviceProduct.deleteProduct(id);
+            return ResponseEntity.ok(new ResponseMessage("Se ha borrado el producto id: " + id));
+        } catch (ProductNotFoundException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseMessage("No se encontro el producto id: " + id));
         }
     }
-     */
 
 }
