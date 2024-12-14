@@ -39,18 +39,17 @@ public class ProductService {
     // ? GET /productos/{id} -> Obtener información de un producto específico.
 
     public ProductDTO getProduct(Integer id){
-        return getAllProducts()
-                .stream().filter(p -> p.getId() == id)
-                .findFirst()
+        return pRep.findById(id)
+                .map(pMapper::apply)
                 .orElseThrow(() -> new ProductNotFoundException("No se encontro el producto id: " + id));
     }
 
     // ? GET /productos?categoria={id} -> Listar productos por categoría.
 
     public List<ProductDTO> getProductsForCategory(Integer categoryId){
-        return getAllProducts()
+        return pRep.findProductsByCategoryId(categoryId)
                 .stream()
-                .filter(p -> p.getCategory().equals(categoryId))
+                .map(pMapper::apply)
                 .toList();
     };
 
