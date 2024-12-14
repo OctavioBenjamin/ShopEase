@@ -32,9 +32,4 @@ public class ProductEntity {
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private CategoryEntity category;
-
-    @OneToMany(mappedBy = "product")
-    private List<CartItemEntity> cartItems;
-
-
 }
