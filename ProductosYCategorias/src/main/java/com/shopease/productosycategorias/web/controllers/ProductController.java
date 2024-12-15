@@ -1,4 +1,4 @@
-package com.shopease.productosycategorias.web.apis;
+package com.shopease.productosycategorias.web.controllers;
 
 import com.shopease.productosycategorias.exception.CategoryNotFoundException;
 import com.shopease.productosycategorias.exception.ProductNotFoundException;
@@ -11,13 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.shopease.productosycategorias.exception.ResponseMessage;
 
 @RestController
 @RequestMapping("/productos")
-public class ProductAPI {
+public class ProductController {
 
     @Autowired
     private ProductService serviceProduct;

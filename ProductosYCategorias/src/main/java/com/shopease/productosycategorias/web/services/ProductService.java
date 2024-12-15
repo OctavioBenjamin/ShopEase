@@ -5,11 +5,13 @@ import com.shopease.productosycategorias.entity.CategoryEntity;
 import com.shopease.productosycategorias.entity.ProductEntity;
 import com.shopease.productosycategorias.exception.CategoryNotFoundException;
 import com.shopease.productosycategorias.exception.ProductNotFoundException;
+import com.shopease.productosycategorias.web.dto.CategoryDTO;
 import com.shopease.productosycategorias.web.dto.ProductDTO;
 import com.shopease.productosycategorias.web.dto.ProductDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -84,8 +86,8 @@ public class ProductService {
                 throw new CategoryNotFoundException("No se encontro la categoria");
             }
 
-            Optional<CategoryEntity> category = categoryService.findById(dto.getCategory());
-            category.ifPresent(product::setCategory);
+            CategoryDTO category = categoryService.findById(dto.getCategory());
+            product.setCategory(new CategoryEntity(category.getName(), new ArrayList<>()));
 
         }
 
