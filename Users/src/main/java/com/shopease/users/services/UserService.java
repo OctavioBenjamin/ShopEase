@@ -8,7 +8,7 @@ import com.shopease.users.entity.UserEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.apache.commons.lang3.ObjectUtils;
+
 
 
 import java.util.Objects;
@@ -35,7 +35,7 @@ public class UserService {
     }
 
     private UserDTO buildModel(UserEntity userEntity) {
-        return new UserDTO(userEntity.getEmail(), userEntity.getPassword(), userEntity.getName())
+        return new UserDTO(userEntity.getEmail(), userEntity.getPassword(), userEntity.getName());
     }
 
     private static UserEntity buildUserSaved(UserRequest request) {

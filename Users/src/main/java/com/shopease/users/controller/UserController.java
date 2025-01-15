@@ -5,40 +5,26 @@ import com.shopease.users.controller.request.UserRequest;
 import com.shopease.users.dto.UserDTO;
 import com.shopease.users.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class UserController implements UserApi {
+public class UserController {
 
     @Autowired
     private UserService service;
 
-    @Override
-    public UserDTO login(UserLoginRequest request) {
-        return service.validateUser(request);
+    @PostMapping("/login")
+    public ResponseEntity<?> login(){
+        return ResponseEntity.ok("Hola mundo");
     }
 
-    @Override
-    public UserDTO saveUser(UserRequest request) throws Exception {
-        return service.save(request);
-    }
-
-    @Override
-    public UserDTO findById(Integer id,final String token) throws Exception {
-        service.findCurrentUser(token);
-        return service.findByUser(id).withToken(token);
-    }
-
-    @Override
-    public UserDTO findCurrentUser(String token) throws Exception {
-        return service.findCurrentUser(token);
-    }
-
-    @Override
-    public String test() throws Exception {
-        return "hello mundo";
+    @PostMapping("/register")
+    public ResponseEntity<?> register(){
+        return ResponseEntity.ok("Hola mundo");
     }
 
 }
