@@ -19,8 +19,7 @@ import java.util.function.Function;
 public class JwtService {
 
     // Replace this with a secure key in a real application, ideally fetched from environment variables
-    @Value("${jwt.secret}")
-    public static String SECRET;
+    public static String SECRET = "1e524eca98c770066c27a98405b1a16d1e121aa92ea3965a1f1c48b8bde3497e1787fa21824867250840abae522efc66d8346a8c3c6936ca829954b758e4713a46c01e69f0825b52d97c8dd71a68a5a87f0161a47ea85d298aa033d59e1fc2cadffa0f5bdf84bce2cb5769b6abf3b31332c747dc3a14fc617e00775cd94545d45ac759c2070afa9d7ae1b147af924bdc6f05322c10df66b31ca5726f4991f918c5278a647718b2cebe2f4b29ce4178b77e618efa29e32391921841f8d0d9c6c5bcf886c572c5a1a345ed5a8f7d51f2ff7c51acaff1e7b65e220a3e03115cc0b9682c43160c2b3808bbe15fcc24335173c36c4bb48a136ce320c92873bf03669c";
 
     // ? Extraer claims
 
