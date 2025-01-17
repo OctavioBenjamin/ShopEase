@@ -1,5 +1,6 @@
 package com.shopease.users.dto;
 
+import com.shopease.users.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,9 +18,12 @@ public class UserDTO {
 
     private String name;
 
-    public UserDTO(String email, String password, String name) {
+    private Role role;
+
+    public UserDTO(String email, String password, String name, Role role) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.role = role;
     }
 }
